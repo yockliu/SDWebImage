@@ -41,6 +41,9 @@ static char operationArrayKey;
 - (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageCompletedBlock)completedBlock {
     [self cancelCurrentImageLoad];
 
+    UIViewContentMode contentMode = self.contentMode;
+    self.contentMode = UIViewContentModeCenter;
+    
     self.image = placeholder;
 
     if (url) {
@@ -50,6 +53,7 @@ static char operationArrayKey;
             dispatch_main_sync_safe(^{
                 if (!wself) return;
                 if (image) {
+                    wself.contentMode = contentMode;
                     wself.image = image;
                     [wself setNeedsLayout];
                 }
