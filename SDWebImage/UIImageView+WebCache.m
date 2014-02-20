@@ -11,6 +11,7 @@
 
 static char operationKey;
 static char operationArrayKey;
+static char preContentModeKey;
 
 @implementation UIImageView (WebCache)
 
@@ -42,6 +43,8 @@ static char operationArrayKey;
     [self cancelCurrentImageLoad];
 
     UIViewContentMode contentMode = self.contentMode;
+    objc_setAssociatedObject(self, &preContentModeKey, @(contentMode), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    
     self.contentMode = UIViewContentModeCenter;
     
     self.image = placeholder;
@@ -53,7 +56,7 @@ static char operationArrayKey;
             dispatch_main_sync_safe(^{
                 if (!wself) return;
                 if (image) {
-                    wself.contentMode = contentMode;
+                    wself.contentMode = [objc_getAssociatedObject(self, &preContentModeKey) integerValue];
                     wself.image = image;
                     [wself setNeedsLayout];
                 }
@@ -103,6 +106,7 @@ static char operationArrayKey;
     if (operation) {
         [operation cancel];
         objc_setAssociatedObject(self, &operationKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        self.contentMode = [objc_getAssociatedObject(self, &preContentModeKey) integerValue];
     }
 }
 
