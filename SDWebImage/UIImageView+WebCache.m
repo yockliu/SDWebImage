@@ -45,7 +45,7 @@ static char preContentModeKey;
     UIViewContentMode contentMode = self.contentMode;
     objc_setAssociatedObject(self, &preContentModeKey, @(contentMode), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
-    self.contentMode = UIViewContentModeCenter;
+    self.contentMode = UIViewContentModeScaleToFill;
     
     self.image = placeholder;
 
