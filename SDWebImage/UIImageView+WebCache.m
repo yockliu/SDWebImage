@@ -56,11 +56,11 @@ static char imageURLKey;
                 if (!wself) return;
                 if (image) {
                     wself.image = image;
-                    [wself setNeedsLayout];
+//                    [wself setNeedsLayout];
                 } else {
                     if ((options & SDWebImageDelayPlaceholder)) {
                         wself.image = placeholder;
-                        [wself setNeedsLayout];
+//                        [wself setNeedsLayout];
                     }
                 }
                 if (completedBlock && finished) {
